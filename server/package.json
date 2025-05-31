@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:worker\"",
+    "dev:server": "node --watch index.js",
+    "dev:worker": "node --watch worker.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "~4.17.22",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.15.24",
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@google/genai": "^1.2.0",
+    "@google/generative-ai": "^0.24.1",
+    "@langchain/community": "^0.3.45",
+    "@langchain/core": "^0.3.57",
+    "@langchain/google-genai": "^0.2.10",
+    "@langchain/qdrant": "^0.1.2",
+    "@langchain/textsplitters": "^0.1.0",
+    "@qdrant/js-client-rest": "^1.14.1",
+    "bullmq": "^5.53.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "~4.21.2",
+    "multer": "^2.0.0",
+    "pdf-parse": "^1.1.1"
+  }
+}
