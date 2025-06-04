@@ -39,13 +39,20 @@ app.get('/', (req, res) => {
 });
 
 app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
-    console.log(req.file); // Log the uploaded file information
+    //console.log(req.file); // Log the uploaded file information
+    console.log(req.body.userId); // <-- This is the userId sent from the client
+
+    if(!req.file || !req.body.userId) {
+        return res.status(404).json({ status: 'failure', message: "pdf file of user id not found" })
+    }
+
 
     const job = await queue.add('file-ready', {
         fileName: req.file.filename,
         path: req.file.path,
         originalName: req.file.originalname,
-        source: req.file.destination
+        source: req.file.destination,
+        userId: req.body.userId
     })
 
     console.log('Job added with ID:', job.id);
@@ -61,8 +68,10 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
 
 app.get('/chat', async (req, res) => {
     const userQuery = req.query.message;
+    const userId = req.query.userId;
 
-    if (!userQuery) {
+    if (!userQuery || !userId) {
+        console.log("returning ")
         return res.status(400).json({
             status: 'error',
             message: 'Query parameter "message" is required'
@@ -78,7 +87,7 @@ app.get('/chat', async (req, res) => {
         embeddings,
         {
             url: 'http://localhost:6333',
-            collectionName: 'langchainjs-testing',
+            collectionName: userId,
         });
 
     const retriever = await vectorStore.asRetriever({k:2});

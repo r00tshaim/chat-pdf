@@ -26,13 +26,14 @@ const ChatComponent: React.FC = () => {
         if (message.trim() === '') {
             return;
         }
+        const userId = user ? user.id : "";
         // Here you would typically send the message to your backend or chat service
-        console.log("Sending message:", message);
+        console.log(`User:${userId} Sending message:${message}`);
 
         // Update the messages state to include the new message
         setMessages(prevMessages => [...prevMessages, {role: 'user', content: message} ]);
 
-        const res = await fetch(`http://localhost:8000/chat?message=${message}`);
+        const res = await fetch(`http://localhost:8000/chat?userId=${userId}&message=${message}`);
 
         const data = await res.json();
 

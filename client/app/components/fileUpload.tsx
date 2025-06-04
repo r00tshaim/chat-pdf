@@ -1,8 +1,11 @@
 'use client';
 import React, { useState } from 'react';
 import { Upload } from 'lucide-react';
+import { useUser } from "@clerk/nextjs"; // Import Clerk hook
 
 const FileUploadComponent: React.FC  = () => {
+
+    const { user } = useUser(); // Get Clerk user
 
     const handleFileUpload = () => {
         const el = document.createElement('input');
@@ -16,6 +19,10 @@ const FileUploadComponent: React.FC  = () => {
                 if(file) {
                     const formData = new FormData();
                     formData.append('pdf', file);
+
+                    if (user?.id) {
+                        formData.append('userId', user.id); // Add user ID to form data
+                    }
 
                     await fetch('http://localhost:8000/upload/pdf', {
                         method: 'POST',

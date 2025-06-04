@@ -38,16 +38,17 @@ const worker = new Worker('file-upload-queue', async (job) => {
     const client = new QdrantClient({ url: "http://localhost:6333", checkCompatibility:false });
 
     const collectionExists = await client.collectionExists(
-      data.originalName
+      data.userId
     );
 
     if (collectionExists) {
-      await client.deleteCollection(data.originalName);
+      //console.log("Deleting collection as there is already a pdf file uploaded by this user")
+      await client.deleteCollection(data.userId);
     }
 
      await QdrantVectorStore.fromDocuments(splitDocs, embedder, {
       url: "http://localhost:6333",
-      collectionName: "langchainjs-testing",
+      collectionName: data.userId,
     });
 
 }, {
