@@ -25,7 +25,7 @@ This project is a **Retrieval-Augmented Generation (RAG)** application that allo
 
 ## System Design
 
-![RAG System Design](attachment:image)
+![image](https://github.com/user-attachments/assets/f14a857b-32eb-4da4-97d1-22104d2f5839)
 
 **Design Summary:**
 1. **User uploads a PDF** via the web interface. The file is stored on the server.
